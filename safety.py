@@ -10,8 +10,7 @@ def validate(intent):
     if intent["action"] not in ALLOWED_ACTIONS:
         raise Exception("Action not allowed")
 
-    if intent["action"] == "scale_deployment":
-        if intent["replicas"] > 10:
-            raise Exception("Replica limit exceeded")
+    if intent["action"] == "scale_deployment" and intent["replicas"] > 10:
+        raise Exception("Replica limit exceeded")
 
     return True
