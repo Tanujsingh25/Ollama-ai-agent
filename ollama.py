@@ -63,32 +63,3 @@ User input:
 
     raw_output = response.json()["response"].strip()
     return json.loads(raw_output)
-
-
-def classify_capability(user_input):
-    prompt = f"""
-Classify the user request into one capability.
-
-Capabilities:
-- aws
-- kubernetes
-- unknown
-
-Return ONLY JSON:
-{{ "capability": "<value>" }}
-
-User input:
-{user_input}
-"""
-
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": MODEL,
-            "prompt": prompt,
-            "stream": False
-        }
-    )
-
-    return json.loads(response.json()["response"])
-

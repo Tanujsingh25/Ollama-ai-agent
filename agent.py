@@ -1,22 +1,25 @@
 #from llm import parse_intent
 from ollama import parse_intent
-from safety import validate
 from executor import execute
+from safety import validate
+from rich import print
 
-def handle_message(user_input, auto_confirm=False):
-    intent = parse_intent(user_input)
-    validate(intent)
+print("[bold green]K8s AI Agent CLI[/bold green]")
+print("Type 'exit' to quit\n")
 
-    if intent["action"] == "scale_deployment" and not auto_confirm:
-        return {
-            "intent": intent,
-            "message": "CONFIRM_REQUIRED"
-        }
+while True:
+    user_input = input(">>> ")
 
-    result = execute(intent)
+    if user_input.lower() == "exit":
+        break
 
-    return {
-        "intent": intent,
-        "result": result
-    }
-    
+    try:
+        intent = parse_intent(user_input)
+        validate(intent)
+        result = execute(intent)
+
+        print("[cyan]Intent:[/cyan]", intent)
+        print("[green]Result:[/green]", result)
+
+    except Exception as e:
+        print("[red]Error:[/red]", str(e))
