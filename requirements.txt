@@ -1,0 +1,7 @@
+requests
+kubernetes
+rich
+fastapi
+uvicorn
+openai
+dotenv
